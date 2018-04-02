@@ -1,3 +1,1 @@
-# VideoRental
-# VideoRental
 # VideoRentalFujitsu
