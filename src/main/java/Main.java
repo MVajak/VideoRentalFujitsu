@@ -13,7 +13,7 @@ public class Main {
     RentalDao rentalDao = new RentalDao();
 
     // Adding videos to inventory
-    Video video1 = new Video("THE MOVIE", true, MovieType.REGULAR_FILMS);
+    Video video1 = new Video("THE MOVIE", true, MovieType.NEW_RELEASES);
     videoDao.addVideo(video1);
 
     // Customer comes along

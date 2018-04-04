@@ -3,6 +3,7 @@ package dao;
 import businessobjects.Customer;
 import businessobjects.Rental;
 import businessobjects.Video;
+import types.MovieType;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class RentalDao {
     int daysRentedFor = rental.getDaysRented();
     if (rental.getReturnDate() == null) {
       System.out.println("RENTED FOR: " + rental.getDaysRented());
-      if (daysCoveredByBonusPoints > 0) {
+      if (daysCoveredByBonusPoints > 0 && rental.getVideo().getType() == MovieType.NEW_RELEASES) {
         System.out.println(MessageFormat.format(RENTAL_BONUS_POINTS_TEMPLATE, video.getTitle(), video.getType(), daysRentedFor, daysCoveredByBonusPoints * BONUS_POINT_PRICE_FOR_DAY_OFF));
         daysRentedFor = rental.getDaysRented() - daysCoveredByBonusPoints;
       }
