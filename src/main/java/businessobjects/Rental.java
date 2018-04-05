@@ -13,10 +13,17 @@ public class  Rental {
   private int overduePrice;
   private Date rentalDate;
   private Date returnDate;
+  private int daysCoveredByBonusPoints;
 
   public Rental(Video video) {
     this.video = video;
     this.rentalDate = new Date();
+  }
+  public int getDaysCoveredByBonusPoints() {
+    return daysCoveredByBonusPoints;
+  }
+  public void setDaysCoveredByBonusPoints(int daysCoveredByBonusPoints) {
+    this.daysCoveredByBonusPoints = daysCoveredByBonusPoints;
   }
 
   public Video getVideo() {
@@ -72,7 +79,6 @@ public class  Rental {
   public void setDaysOverdue(int daysOverdue) {
     this.daysOverdue = daysOverdue;
   }
-
 
   public void calculateRentalPrice() {
     calculateRentalPriceForDays(getDaysRented());

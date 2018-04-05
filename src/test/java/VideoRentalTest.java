@@ -74,7 +74,8 @@ public class VideoRentalTest {
         rental.setRentalDate(cal.getTime());
 
         rentalDao.returnRental(customer, rental);
-        rentalDao.printCheckFor(rental, 0);
+        rentalDao.addRentalsForCheck(rental);
+        rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
 
         assertTrue(rental.getOverduePrice() == 6);
     }
@@ -82,8 +83,10 @@ public class VideoRentalTest {
     @Test
     public void getMaximumDaysCoveredByBonusPointsForDays_MaxDaysCoveredByPonusPoints() {
         Customer customer = new Customer("mihkel");
+        Video video = new Video("THE MOVIE", true, MovieType.NEW_RELEASES);
+        Rental rental = new Rental(video);
         customer.setBonusPoints(56);
-        int maximumDaysCoveredByBonusPointsForDays = customer.getMaximumDaysCoveredByBonusPointsForDays(3);
+        int maximumDaysCoveredByBonusPointsForDays = customer.getMaximumDaysCoveredByBonusPointsForDays(3, rental);
 
         assertTrue(customer.getBonusPoints() == 6);
         assertTrue(maximumDaysCoveredByBonusPointsForDays == 2);
