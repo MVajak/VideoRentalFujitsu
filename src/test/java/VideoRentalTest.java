@@ -86,7 +86,8 @@ public class VideoRentalTest {
         Video video = new Video("THE MOVIE", true, MovieType.NEW_RELEASES);
         Rental rental = new Rental(video);
         customer.setBonusPoints(56);
-        int maximumDaysCoveredByBonusPointsForDays = customer.getMaximumDaysCoveredByBonusPointsForDays(3, rental);
+        rental.setDaysRented(3);
+        int maximumDaysCoveredByBonusPointsForDays = customer.getMaximumDaysCoveredByBonusPointsForDays(rental);
 
         assertTrue(customer.getBonusPoints() == 6);
         assertTrue(maximumDaysCoveredByBonusPointsForDays == 2);

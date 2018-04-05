@@ -14,7 +14,7 @@ public class Main {
 
     // Adding videos to inventory
     Video video1 = new Video("THE MOVIE", true, MovieType.NEW_RELEASES);
-    Video video2 = new Video("THE MOVIE", true, MovieType.NEW_RELEASES);
+    Video video2 = new Video("THE MOVIE", true, MovieType.REGULAR_FILMS);
     videoDao.addVideo(video1);
     videoDao.addVideo(video2);
 
@@ -46,19 +46,19 @@ public class Main {
 
     // Printing the check
 
-    rental1.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental1.getDaysRented(), rental1));
-    rental2.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental2.getDaysRented(), rental2));
+    rental1.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental1));
+    rental2.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental2));
 
     rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
-    System.out.println("LEFT BONUSPOINTS: " + customer.getBonusPoints());
+    System.out.println("LEFT BONUSPOINTS: " + customer.getBonusPoints() + '\n');
 
     // Bringing back the video
-    //rentalDao.returnRental(customer, rental1);
-    //rentalDao.returnRental(customer, rental2);
-    //rentalDao.addRentalsForCheck(rental1);
-    //rentalDao.addRentalsForCheck(rental2);
+    rentalDao.returnRental(customer, rental1);
+    rentalDao.returnRental(customer, rental2);
+    rentalDao.addRentalsForCheck(rental1);
+    rentalDao.addRentalsForCheck(rental2);
 
     // Printing the check
-    //rentalDao.printCheckFor(rentalDao.getRentalsForCheck(), null);
+    rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
   }
 }

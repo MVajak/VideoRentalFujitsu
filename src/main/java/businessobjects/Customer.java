@@ -28,17 +28,15 @@ public class Customer {
     this.bonusPoints = bonusPoints;
   }
 
-  public int getMaximumDaysCoveredByBonusPointsForDays(int daysRented, Rental rental) {
+  public int getMaximumDaysCoveredByBonusPointsForDays(Rental rental) {
+    int daysRented = rental.getDaysRented();
     if (rental.getVideo().getType() == MovieType.NEW_RELEASES) {
       int maxDaysOff = (int) Math.floor(getBonusPoints() / BONUS_POINT_PRICE_FOR_DAY_OFF);
-      System.out.println("MAX DAYS OFF: " + maxDaysOff);
       if(daysRented < maxDaysOff){
         setBonusPoints(getBonusPoints() - (daysRented) * BONUS_POINT_PRICE_FOR_DAY_OFF);
-        System.out.println("CUSTOMER BONUSPOINTS (IF): " + getBonusPoints());
         return daysRented;
       } else {
         setBonusPoints(getBonusPoints() - (maxDaysOff * BONUS_POINT_PRICE_FOR_DAY_OFF));
-        System.out.println("CUSTOMER BONUSPOINTS (ELSE): " + getBonusPoints());
         return maxDaysOff;
       }
     }
