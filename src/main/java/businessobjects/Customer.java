@@ -2,6 +2,9 @@ package businessobjects;
 
 import types.MovieType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static businessobjects.Rental.BONUS_POINT_PRICE_FOR_DAY_OFF;
 
 public class Customer {

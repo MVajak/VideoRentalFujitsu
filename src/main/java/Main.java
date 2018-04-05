@@ -31,10 +31,8 @@ public class Main {
     rental1.setDaysRented(2);
     rental2.setDaysRented(4);
 
-    rentalDao.addRentalsForCheck(rental1);
-    rentalDao.addRentalsForCheck(rental2);
-
-
+    rental1.setForCheckOut(true);
+    rental2.setForCheckOut(true);
 
     final Calendar cal = Calendar.getInstance();
     cal.add(Calendar.DATE, -4);
@@ -49,16 +47,18 @@ public class Main {
     rental1.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental1));
     rental2.setDaysCoveredByBonusPoints(customer.getMaximumDaysCoveredByBonusPointsForDays(rental2));
 
-    rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
+    rentalDao.printCheckFor(customer);
     System.out.println("LEFT BONUSPOINTS: " + customer.getBonusPoints() + '\n');
+
+    rental1.setForCheckOut(true);
+    rental2.setForCheckOut(true);
 
     // Bringing back the video
     rentalDao.returnRental(customer, rental1);
     rentalDao.returnRental(customer, rental2);
-    rentalDao.addRentalsForCheck(rental1);
-    rentalDao.addRentalsForCheck(rental2);
 
     // Printing the check
-    rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
+    rentalDao.printCheckFor(customer);
+
   }
 }

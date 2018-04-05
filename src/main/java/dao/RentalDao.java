@@ -15,14 +15,7 @@ private static final String RENTAL_TEMPLATE = "{0}({1}) {2} days {3} EUR";
 private static final String RENTAL_OVERDUE_TEMPLATE = "{0}({1}) {2} extra days {3} EUR";
 private static final String RENTAL_BONUS_POINTS_TEMPLATE = "{0}({1}) {2} days (Paid with {3} Bonus points)";
 private Map<Customer, ArrayList<Rental>> customerRentedVideos = new HashMap<>();
-private List<Rental> rentalsForCheck = new ArrayList<>();
 
-public void addRentalsForCheck(Rental rental) {
-    rentalsForCheck.add(rental);
-}
-public List<Rental> getRentalsForCheck(){
-    return rentalsForCheck;
-}
 public void addRentalToCustomer(Customer customer, Rental rental) {
     if (rental.getVideo().getAvailability()) {
         rental.calculateRentalPrice();
@@ -33,14 +26,18 @@ public void addRentalToCustomer(Customer customer, Rental rental) {
     }
 }
 
-public void printCheckFor(List<Rental> rentals) {
+public void removeRentalFromCustomer(Customer customer, Rental rental) {
+    customerRentedVideos.get(customer).remove(rental);
+}
+
+public void printCheckFor(Customer customer) {
     int totalPrice = 0;
-    for (Rental rental : rentals) {
+    for (Rental rental : customerRentedVideos.get(customer)) {
+        if (!rental.isForCheckOut()) continue;
         Video video = rental.getVideo();
         int daysCoveredByBonusPoints = rental.getDaysCoveredByBonusPoints();
         int daysRentedFor = rental.getDaysRented();
         if (rental.getReturnDate() == null) {
-            System.out.println("RENTED FOR: " + rental.getDaysRented());
 
             if (daysCoveredByBonusPoints > 0 && rental.getVideo().getType() == MovieType.NEW_RELEASES) {
                 System.out.println(MessageFormat.format(RENTAL_BONUS_POINTS_TEMPLATE, video.getTitle(), video.getType(), daysRentedFor, daysCoveredByBonusPoints * BONUS_POINT_PRICE_FOR_DAY_OFF));
@@ -55,10 +52,11 @@ public void printCheckFor(List<Rental> rentals) {
             rental.calculateOverduePrice();
             System.out.println(MessageFormat.format(RENTAL_OVERDUE_TEMPLATE, video.getTitle(), video.getType(), rental.getDaysOverdue(), rental.getOverduePrice()));
             totalPrice += rental.getOverduePrice();
+            removeRentalFromCustomer(customer, rental);
         }
+        rental.setForCheckOut(false);
     }
     System.out.println("TOTAL PRICE: " + totalPrice + "\n");
-    rentalsForCheck.clear();
 }
 
 public void addUser(Customer customer) {
@@ -82,7 +80,6 @@ public void returnRental(Customer customer, Rental rental) {
         rental.calculateOverduePrice();
     }
     rental.getVideo().setAvailability(true);
-    customerRentedVideos.get(customer).remove(rental);
 }
 
 private int daysBetween(Date d1, Date d2) {

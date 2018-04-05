@@ -74,8 +74,8 @@ public class VideoRentalTest {
         rental.setRentalDate(cal.getTime());
 
         rentalDao.returnRental(customer, rental);
-        rentalDao.addRentalsForCheck(rental);
-        rentalDao.printCheckFor(rentalDao.getRentalsForCheck());
+        rental.setForCheckOut(true);
+        rentalDao.printCheckFor(customer);
 
         assertTrue(rental.getOverduePrice() == 6);
     }

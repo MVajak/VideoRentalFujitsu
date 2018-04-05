@@ -14,6 +14,7 @@ public class  Rental {
   private Date rentalDate;
   private Date returnDate;
   private int daysCoveredByBonusPoints;
+  private boolean isForCheckOut;
 
   public Rental(Video video) {
     this.video = video;
@@ -82,6 +83,14 @@ public class  Rental {
 
   public void calculateRentalPrice() {
     calculateRentalPriceForDays(getDaysRented());
+  }
+
+  public boolean isForCheckOut() {
+    return isForCheckOut;
+  }
+
+  public void setForCheckOut(boolean forCheckOut) {
+    isForCheckOut = forCheckOut;
   }
 
   public void calculateRentalPriceForDays(int days) {
